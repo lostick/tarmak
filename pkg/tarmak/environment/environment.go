@@ -12,7 +12,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hashicorp/go-multierror"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
 	"k8s.io/client-go/rest"
@@ -180,7 +179,7 @@ func generateRSAKey(bitSize int, filePath string) (*rsa.PrivateKey, error) {
 	}
 	defer outFile.Close()
 
-	if err := os.Chmod(filePath, 0600); err != nil {
+	if err := os.Chmod(filePath, 0400); err != nil {
 		return nil, err
 	}
 
@@ -238,7 +237,7 @@ func (e *Environment) getSSHPrivateKey() (interface{}, error) {
 	return sshKey, nil
 }
 
-func (e *Environment) SSHPrivateKeyPath() string {
+func (e *Environment) SSHPrivatFeKeyPath() string {
 	if e.conf.SSH == nil || e.conf.SSH.PrivateKeyPath == "" {
 		return filepath.Join(e.ConfigPath(), "id_rsa")
 	}
