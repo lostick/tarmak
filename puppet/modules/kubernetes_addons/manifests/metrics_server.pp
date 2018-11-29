@@ -16,7 +16,7 @@ class kubernetes_addons::metrics_server(
 
   if $version == undef {
     if versioncmp($::kubernetes::version, '1.8.0') >= 0 {
-      $_version = '0.3.0'
+      $_version = '0.3.1'
     } else {
       $_version = '0.1.0'
     }

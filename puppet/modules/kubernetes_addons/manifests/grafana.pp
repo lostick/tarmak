@@ -4,10 +4,12 @@ class kubernetes_addons::grafana(
 ) inherits ::kubernetes_addons::params {
   require ::kubernetes
 
-  kubernetes::apply{'heapster-grafana':
-    manifests => [
-      template('kubernetes_addons/grafana-svc.yaml.erb'),
-      template('kubernetes_addons/grafana-deployment.yaml.erb'),
-    ],
+  if $::prometheus::mode == 'Full' {
+    kubernetes::apply{'heapster-grafana':
+      manifests => [
+        template('kubernetes_addons/grafana-svc.yaml.erb'),
+        template('kubernetes_addons/grafana-deployment.yaml.erb'),
+      ],
+    }
   }
 }
